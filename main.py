@@ -1,3 +1,4 @@
+# using the professor's method of getting the puzzle, as seen in the project slides
 def get_puzzle():
     print("Enter your puzzle, using a zero to represent the blank. " 
             + "Please only enter valid 8-puzzles. Enter the puzzle demilimiting " 
@@ -24,17 +25,29 @@ def get_puzzle():
 
     #puzzle[0][2] = user_puzzle[2][0]      # how to swap
 
+    find_blank(puzzle)
+    #up(puzzle)
     print(puzzle)
-
-get_puzzle()
 
 # for moving up,down,left,right create borders (left border, top border etc.)
 # create function to find location of 0
 # movement functions will use 0 location to tell if a move is possible
 # create a temp value to hold the value of the intended movement OR find way to switch the values of the 0 and intended new spot 
 
-#def find_blank():
-    # search matrix to find 0
+# finds the location of 0 (the blank)
+def find_blank(puzzle):
+    # search the matrix to find 0 location
+    for i in range(3):
+        for j in range(3):
+            if puzzle[i][j] == 0:
+                #print(i,"\n")
+                #print(j,"\n")
+                return i, j
 
-#def up():
+def up(puzzle):
     # move 0 up a row, unless 0 is in topmost row
+    for i in puzzle:
+        if puzzle[i] != 0:
+            print("hjjj")
+
+get_puzzle()
