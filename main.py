@@ -21,6 +21,7 @@ def get_puzzle():
 
 
     puzzle = [puzzle_row_one, puzzle_row_two, puzzle_row_three]
+    print_puzzle(puzzle)
     #Node(puzzle)
 
     #puzzle.insert(2, [1, 2, 3])
@@ -29,6 +30,15 @@ def get_puzzle():
 
     #find_blank(puzzle)
     up(puzzle)
+    print_puzzle(puzzle)
+
+    down(puzzle)
+    print_puzzle(puzzle)
+
+    left(puzzle)
+    print_puzzle(puzzle)
+
+    right(puzzle)
     print_puzzle(puzzle)
 
 # for moving up,down,left,right create borders (left border, top border etc.)
@@ -49,6 +59,7 @@ def find_blank(puzzle):
 def print_puzzle(puzzle):
     for i in range(3):
         print(puzzle[i])
+    print("\n")
 
 def up(puzzle):
     # move 0 up a row, unless 0 is in topmost row
@@ -59,5 +70,29 @@ def up(puzzle):
     if (row != 0):
         puzzle[row][col] = puzzle[row-1][col]
         puzzle[row-1][col] = 0
+
+def down(puzzle):
+    # move 0 down a row, unless 0 is in bottom row
+    row, col = find_blank(puzzle)
+
+    if (row != 2):
+        puzzle[row][col] = puzzle[row+1][col]
+        puzzle[row+1][col] = 0
+
+def left(puzzle):
+    # move 0 to the left, unless 0 is in leftmost row
+    row, col = find_blank(puzzle)
+
+    if (col != 0):
+        puzzle[row][col] = puzzle[row][col-1]
+        puzzle[row][col-1] = 0
+
+def right(puzzle):
+    # move 0 to the right, unless 0 is in rightmost row
+    row, col = find_blank(puzzle)
+
+    if (col != 2):
+        puzzle[row][col] = puzzle[row][col+1]
+        puzzle[row][col+1] = 0
 
 get_puzzle()
