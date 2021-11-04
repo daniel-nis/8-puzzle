@@ -1,3 +1,4 @@
+
 # using the professor's method of getting the puzzle, as seen in the project slides
 def get_puzzle():
     print("Enter your puzzle, using a zero to represent the blank. " 
@@ -20,14 +21,15 @@ def get_puzzle():
 
 
     puzzle = [puzzle_row_one, puzzle_row_two, puzzle_row_three]
+    #Node(puzzle)
 
     #puzzle.insert(2, [1, 2, 3])
 
     #puzzle[0][2] = user_puzzle[2][0]      # how to swap
 
-    find_blank(puzzle)
-    #up(puzzle)
-    print(puzzle)
+    #find_blank(puzzle)
+    up(puzzle)
+    print_puzzle(puzzle)
 
 # for moving up,down,left,right create borders (left border, top border etc.)
 # create function to find location of 0
@@ -44,10 +46,18 @@ def find_blank(puzzle):
                 #print(j,"\n")
                 return i, j
 
+def print_puzzle(puzzle):
+    for i in range(3):
+        print(puzzle[i])
+
 def up(puzzle):
     # move 0 up a row, unless 0 is in topmost row
-    for i in puzzle:
-        if puzzle[i] != 0:
-            print("hjjj")
+    row, col = find_blank(puzzle)
+    #print(row, "\n")
+    #print(col, "\n")
+
+    if (row != 0):
+        puzzle[row][col] = puzzle[row-1][col]
+        puzzle[row-1][col] = 0
 
 get_puzzle()
