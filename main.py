@@ -1,4 +1,5 @@
 from node import Node
+import copy
 
 # using the professor's method of getting the puzzle, as seen in the project slides
 def get_puzzle():
@@ -43,7 +44,7 @@ def get_puzzle():
 
     movements(puzzle)
 
-terminal_state = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
+goal = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
 
 # for moving up,down,left,right create borders (left border, top border etc.)
 # create function to find location of 0
@@ -67,63 +68,75 @@ def print_puzzle(puzzle):
 
 def up(puzzle):
     # move 0 up a row, unless 0 is in topmost row
-    row, col = find_blank(puzzle)
-    #print(row, "\n")
-    #print(col, "\n")
+    moved_up = copy.deepcopy(puzzle)    # make copy of puzzle to not change original puzzle
+    row, col = find_blank(moved_up)
 
     if (row != 0):
-        puzzle[row][col] = puzzle[row-1][col]
-        puzzle[row-1][col] = 0
+        moved_up[row][col] = moved_up[row-1][col]   # swap the 0 with top value
+        moved_up[row-1][col] = 0
+    else:
+        return -1
+    return moved_up
 
 def down(puzzle):
     # move 0 down a row, unless 0 is in bottommost row
-    row, col = find_blank(puzzle)
+    moved_down = copy.deepcopy(puzzle)
+    row, col = find_blank(moved_down)
 
     if (row != 2):
-        puzzle[row][col] = puzzle[row+1][col]
-        puzzle[row+1][col] = 0
+        moved_down[row][col] = moved_down[row+1][col]
+        moved_down[row+1][col] = 0
+    else:
+        return -1
+    return moved_down
 
 def left(puzzle):
     # move 0 to the left, unless 0 is in leftmost row
-    row, col = find_blank(puzzle)
+    moved_left = copy.deepcopy(puzzle)
+    row, col = find_blank(moved_left)
 
     if (col != 0):
-        puzzle[row][col] = puzzle[row][col-1]
-        puzzle[row][col-1] = 0
+        moved_left[row][col] = moved_left[row][col-1]
+        moved_left[row][col-1] = 0
+    else:
+        return -1
+    return moved_left
 
 def right(puzzle):
     # move 0 to the right, unless 0 is in rightmost row
-    row, col = find_blank(puzzle)
+    moved_right = copy.deepcopy(puzzle)
+    row, col = find_blank(moved_right)
 
     if (col != 2):
-        puzzle[row][col] = puzzle[row][col+1]
-        puzzle[row][col+1] = 0
+        moved_right[row][col] = moved_right[row][col+1]
+        moved_right[row][col+1] = 0
+    else:
+        return -1
+    return moved_right
 
 # movements function should keep track of each possible movement made, adding 1 to the depth for each iteration
 def movements(puzzle):
     movements = []
     depth = 0
 
-    up(puzzle)
-    movements.append(puzzle)
-    print_puzzle(puzzle)
+    if(up(puzzle) != -1):
+        movements.append(up(puzzle))
+        print_puzzle(up(puzzle))
+    
+    if(down(puzzle) != -1):
+        movements.append(down(puzzle))
+        print_puzzle(down(puzzle))
+    
+    if(left(puzzle) != -1):
+        movements.append(left(puzzle))
+        print_puzzle(left(puzzle))
 
-    down(puzzle)
-    movements.append(puzzle)
-    print_puzzle(puzzle)
+    if(right(puzzle) != -1):
+        movements.append(right(puzzle))
+        print_puzzle(right(puzzle))
 
-    left(puzzle)
-    movements.append(puzzle)
-    print_puzzle(puzzle)
-
-    right(puzzle)
-    movements.append(puzzle)
-    print_puzzle(puzzle)
-
-    depth + 1
-
-    print(movements)
-    print(depth)
+    #print(movements)
+    #print(depth)
 
 # create misplaced tile heuristic getter, by setting the goal state
 # and finding how far off each tile is from where it should be
