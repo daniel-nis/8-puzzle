@@ -151,7 +151,7 @@ def misplaced_tiles(puzzle):
     for i in range(3):
         for j in range(3):
             if puzzle[i][j] != goal[i][j]:
-                if (puzzle[i][j] != 0)
+                if puzzle[i][j] != 0:
                     h += 1
     return h
 
