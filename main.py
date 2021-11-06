@@ -74,9 +74,11 @@ def up(puzzle):
     if (row != 0):
         moved_up[row][col] = moved_up[row-1][col]   # swap the 0 with top value
         moved_up[row-1][col] = 0
+        #up_node = Node(moved_up, 0, 0)
     else:
         return -1
     return moved_up
+    #return up_node
 
 def down(puzzle):
     # move 0 down a row, unless 0 is in bottommost row
@@ -135,11 +137,22 @@ def movements(puzzle):
         movements.append(right(puzzle))
         print_puzzle(right(puzzle))
 
+    h = misplaced_tiles(puzzle)
+    print(h)
+
     #print(movements)
     #print(depth)
 
 # create misplaced tile heuristic getter, by setting the goal state
 # and finding how far off each tile is from where it should be
+
+def misplaced_tiles(puzzle):
+    h = 0
+    for i in range(3):
+        for j in range(3):
+            if puzzle[i][j] != goal[i][j]:
+                h += 1
+    return h
 
 get_puzzle()
 
