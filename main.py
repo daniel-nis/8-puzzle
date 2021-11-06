@@ -166,11 +166,24 @@ def manhattan_distance(puzzle):
     for i in range(3):
         for j in range(3):
             if puzzle[i][j] != goal[i][j]:
-                if puzzle[i][j] != 0:           # finish this later
-
+                if puzzle[i][j] != 0:       
+                    goal_row, goal_col = get_goal_tile(puzzle[i][j])
+                    row = i
+                    col = j
+                    h += abs(goal_row - row) + abs(goal_col - col)
     return h
 
+# gets the goal location of the tile being looked at in the manhattan distance function
+def get_goal_tile(tile):
+    for i in range(3):
+        for j in range(3):
+            if goal[i][j] == tile:
+                return i, j
+
+
 get_puzzle()
+
+# implement a priority queue for the moves
 
 # search algorithm
 # function general-search(problem, QUEUEING-FUNCTION)
