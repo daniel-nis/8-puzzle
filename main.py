@@ -1,5 +1,6 @@
 from node import Node
 import copy
+import heapq
 
 # using the professor's method of getting the puzzle, as seen in the project slides
 def get_puzzle():
@@ -28,19 +29,6 @@ def get_puzzle():
     #puzzle.insert(2, [1, 2, 3])
 
     #puzzle[0][2] = user_puzzle[2][0]      # how to swap
-
-    #find_blank(puzzle)
-    #up(puzzle)
-    #print_puzzle(puzzle)
-
-    #down(puzzle)
-    #print_puzzle(puzzle)
-
-    #left(puzzle)
-    #print_puzzle(puzzle)
-
-    #right(puzzle)
-    #print_puzzle(puzzle)
 
     movements(puzzle)
 
@@ -118,32 +106,21 @@ def right(puzzle):
 # movements function should keep track of each possible movement made, adding 1 to the depth for each iteration
 def movements(puzzle):
     movements = []
-    depth = 0
+    #depth = 0
 
     if(up(puzzle) != -1):
         movements.append(up(puzzle))
-        print_puzzle(up(puzzle))
     
     if(down(puzzle) != -1):
         movements.append(down(puzzle))
-        print_puzzle(down(puzzle))
     
     if(left(puzzle) != -1):
         movements.append(left(puzzle))
-        print_puzzle(left(puzzle))
 
     if(right(puzzle) != -1):
         movements.append(right(puzzle))
-        print_puzzle(right(puzzle))
 
-    h = misplaced_tiles(puzzle)
-    print(h)
-
-    h2 = manhattan_distance(puzzle)
-    print(h2)
-
-    #print(movements)
-    #print(depth)
+    return movements
 
 # misplaced tile heuristic finder will count the number of tiles
 # that are not in their correct spot
@@ -194,3 +171,36 @@ get_puzzle()
 #    if problem.GOAL-TEST(node.STATE) succeeds then return node
 #        nodes = QUEUEING-FUNCTION(nodes, EXPAND(node, problem.OPERATORS))
 # end
+
+def general_search(puzzle):
+    depth = 0
+    heuristic = 0
+    starting_node = Node(puzzle, depth, heuristic)
+    nodes = []  # heap
+    
+    heapq.heappush(nodes, starting_node)
+    nodes_expanded = 0
+    max_queue_size = 0
+
+    if len(nodes) == 0:
+        return "failure"
+
+    goal_reached = False
+    while goal_reached != True:
+        max_queue_size = max(len(nodes), max_queue_size)
+
+        heapq.heapify(nodes)
+        node = heapq.heappop(nodes)
+
+        if node.puzzle == goal:
+            print("Goal has been reached.")
+            print_puzzle(node.puzzle)
+            print("Depth: ", node.depth)
+            print("Nodes Expanded: ", nodes_expanded)
+            print("Max Queue Size: ", max_queue_size)
+            goal_reached = True
+
+        # finish later
+    
+
+general_search(goal)
