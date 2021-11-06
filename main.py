@@ -47,9 +47,8 @@ def get_puzzle():
 goal = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
 
 # for moving up,down,left,right create borders (left border, top border etc.)
-# create function to find location of 0
 # movement functions will use 0 location to tell if a move is possible
-# switch the values of the 0 and intended new spot 
+# if move is possible, switch the values of the 0 and the moved tile
 
 # finds the location of 0 (the blank)
 def find_blank(puzzle):
@@ -140,11 +139,14 @@ def movements(puzzle):
     h = misplaced_tiles(puzzle)
     print(h)
 
+    h2 = manhattan_distance(puzzle)
+    print(h2)
+
     #print(movements)
     #print(depth)
 
-# create misplaced tile heuristic getter, by setting the goal state
-# and finding how far off each tile is from where it should be
+# misplaced tile heuristic finder will count the number of tiles
+# that are not in their correct spot
 
 def misplaced_tiles(puzzle):
     h = 0
@@ -153,6 +155,19 @@ def misplaced_tiles(puzzle):
             if puzzle[i][j] != goal[i][j]:
                 if puzzle[i][j] != 0:
                     h += 1
+    return h
+
+# manhattan distance heuristic finder counts the number of spots that
+# a tile is off from its goal, and totals up this count for all tiles
+# equation: h = |x1 - x2| + |y1 - y2|
+
+def manhattan_distance(puzzle):
+    h = 0
+    for i in range(3):
+        for j in range(3):
+            if puzzle[i][j] != goal[i][j]:
+                if puzzle[i][j] != 0:           # finish this later
+
     return h
 
 get_puzzle()
