@@ -7,3 +7,6 @@ class Node:
         self.heuristic = heuristic
 
         self.cost = self.depth + self.heuristic
+
+    def __lt__(self, other):
+        return (self.cost < other.cost)

@@ -30,7 +30,8 @@ def get_puzzle():
 
     #puzzle[0][2] = user_puzzle[2][0]      # how to swap
 
-    movements(puzzle)
+    #movements(puzzle)
+    general_search(puzzle)
 
 goal = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
 
@@ -157,9 +158,6 @@ def get_goal_tile(tile):
             if goal[i][j] == tile:
                 return i, j
 
-
-get_puzzle()
-
 # implement a priority queue for the moves
 
 # search algorithm
@@ -167,9 +165,9 @@ get_puzzle()
 # nodes = MAKE-QUEUE(MAKE-NODE(problem.INITIAL-STATE))
 # loop do
 #    if EMPTY(nodes) then return "failure"
-#        node = REMOVE-FRONT(nodes)
+#    node = REMOVE-FRONT(nodes)
 #    if problem.GOAL-TEST(node.STATE) succeeds then return node
-#        nodes = QUEUEING-FUNCTION(nodes, EXPAND(node, problem.OPERATORS))
+#    nodes = QUEUEING-FUNCTION(nodes, EXPAND(node, problem.OPERATORS))
 # end
 
 def general_search(puzzle):
@@ -200,7 +198,18 @@ def general_search(puzzle):
             print("Max Queue Size: ", max_queue_size)
             goal_reached = True
 
+        else:
+            moves = []
+            moves = movements(node.puzzle)
+            depth += 1
+            nodes_expanded += len(moves)
+
+            for k in range(len(moves)):
+                new_node = Node(moves[k], depth, heuristic)
+                heapq.heappush(nodes, new_node)
+
         # finish later
     
 
-general_search(goal)
+#general_search(goal)
+get_puzzle()
