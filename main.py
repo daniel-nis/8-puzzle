@@ -4,7 +4,7 @@ import heapq
 
 # using the professor's method of getting the puzzle, as seen in the project slides
 def get_puzzle():
-    print("Enter your puzzle, using a zero to represent the blank. " 
+    """print("Enter your puzzle, using a zero to represent the blank. " 
             + "Please only enter valid 8-puzzles. Enter the puzzle demilimiting " 
             + "the numbers with a space. RET only when finished." + '\n')
 
@@ -23,7 +23,8 @@ def get_puzzle():
 
 
 
-    puzzle = [puzzle_row_one, puzzle_row_two, puzzle_row_three]
+    puzzle = [puzzle_row_one, puzzle_row_two, puzzle_row_three]"""
+    puzzle = [[1, 2, 3], [5, 0, 6], [4, 7, 8]]                  ##### comment out later #####
     print_puzzle(puzzle)
 
     #puzzle.insert(2, [1, 2, 3])
@@ -171,14 +172,30 @@ def get_goal_tile(tile):
 # end
 
 def general_search(puzzle):
+    print("Enter the number associated with an algorithm to select it:\n"
+                + "1. Uniform Cost Search\n"
+                + "2. A* with Misplaced Tile heuristic\n"
+                + "3. A* with Manhattan Distance heuristic")
+    selection = input("Enter number: ")
+
     depth = 0
-    heuristic = 0
+    h = 0
+    if selection == '1':
+        h = 0
+    elif selection == '2':
+        h = misplaced_tiles(puzzle)
+    elif selection == '3':
+        h = manhattan_distance(puzzle)
+    heuristic = h
+
     starting_node = Node(puzzle, depth, heuristic)
     nodes = []  # heap
     
     heapq.heappush(nodes, starting_node)
     nodes_expanded = 0
     max_queue_size = 0
+
+    print(starting_node.heuristic)          ############remove l8r
 
     if len(nodes) == 0:
         return "failure"
@@ -189,6 +206,7 @@ def general_search(puzzle):
 
         heapq.heapify(nodes)
         node = heapq.heappop(nodes)
+        #print_puzzle(node.puzzle)
 
         if node.puzzle == goal:
             print("Goal has been reached.")
@@ -205,11 +223,26 @@ def general_search(puzzle):
             nodes_expanded += len(moves)
 
             for k in range(len(moves)):
+                if selection == '1':
+                    heuristic = 0
+                elif selection == '2':
+                    heuristic = misplaced_tiles(moves[k])
+                    print(heuristic)
+                elif selection == '3':
+                    heuristic = manhattan_distance(moves[k])
+                    print(heuristic)
                 new_node = Node(moves[k], depth, heuristic)
                 heapq.heappush(nodes, new_node)
 
         # finish later
     
+    """def algo_select():
+        print("Enter the number associated with an algorithm to select it:\n"
+                + "1. Uniform Cost Search\n"
+                + "2. A* with Misplaced Tile heuristic"
+                + "3. A* with Manhattan Distance heuristic")
+        selection = input("Enter number: ")
+        print(selection)"""
 
 #general_search(goal)
 get_puzzle()

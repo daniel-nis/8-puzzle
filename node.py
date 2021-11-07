@@ -9,4 +9,4 @@ class Node:
         self.cost = self.depth + self.heuristic
 
     def __lt__(self, other):
-        return (self.cost < other.cost) or (self.cost == other.cost)
+        return (self.cost < other.cost) #or (self.cost == other.cost)
