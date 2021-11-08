@@ -25,11 +25,12 @@ def get_puzzle():
 
     puzzle = [puzzle_row_one, puzzle_row_two, puzzle_row_three]"""
     #puzzle = [[1, 2, 3], [5, 0, 6], [4, 7, 8]]        # depth 4          ##### comment out later #####
-    puzzle = [[1, 3, 6], [5, 0, 2], [4, 7, 8]]          # depth 8
+    #puzzle = [[1, 3, 6], [5, 0, 2], [4, 7, 8]]          # depth 8
     #puzzle = [[1, 3, 6], [5, 0, 7], [4, 8, 2]]          # depth 12
     #puzzle = [[1, 6, 7], [5, 0, 3], [4, 8, 2]]          # depth 16
     #puzzle = [[7, 1, 2], [4, 8, 5], [6, 3, 0]]         # depth 20
-    print_puzzle(puzzle)
+    puzzle = [[0, 7, 2], [4, 6, 1], [3, 5, 8]]          # depth 24
+    #print_puzzle(puzzle)
 
     general_search(puzzle)
 
@@ -225,8 +226,8 @@ def general_search(puzzle):
                     heuristic = manhattan_distance(moves[k])
                 new_node = Node(moves[k], depth, heuristic)
                 new_node.depth = depth+1
-                if new_node not in already_visited:
-                    already_visited.append(new_node)
+                if new_node.puzzle not in already_visited:
+                    already_visited.append(new_node.puzzle)
                     heapq.heappush(nodes, new_node)
             
         max_queue_size = max(len(nodes), max_queue_size)
