@@ -25,15 +25,12 @@ def get_puzzle():
 
     puzzle = [puzzle_row_one, puzzle_row_two, puzzle_row_three]"""
     #puzzle = [[1, 2, 3], [5, 0, 6], [4, 7, 8]]        # depth 4          ##### comment out later #####
-    #puzzle = [[1, 3, 6], [5, 0, 2], [4, 7, 8]]          # depth 8
-    puzzle = [[1, 3, 6], [5, 0, 7], [4, 8, 2]]          # depth 12
+    puzzle = [[1, 3, 6], [5, 0, 2], [4, 7, 8]]          # depth 8
+    #puzzle = [[1, 3, 6], [5, 0, 7], [4, 8, 2]]          # depth 12
+    #puzzle = [[1, 6, 7], [5, 0, 3], [4, 8, 2]]          # depth 16
+    #puzzle = [[7, 1, 2], [4, 8, 5], [6, 3, 0]]         # depth 20
     print_puzzle(puzzle)
 
-    #puzzle.insert(2, [1, 2, 3])
-
-    #puzzle[0][2] = user_puzzle[2][0]      # how to swap
-
-    #movements(puzzle)
     general_search(puzzle)
 
 goal = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
@@ -48,8 +45,6 @@ def find_blank(puzzle):
     for i in range(3):
         for j in range(3):
             if puzzle[i][j] == 0:
-                #print(i,"\n")
-                #print(j,"\n")
                 return i, j
 
 def print_puzzle(puzzle):
@@ -65,7 +60,6 @@ def up(puzzle):
     if (row != 0):
         moved_up[row][col] = moved_up[row-1][col]   # swap the 0 with top value
         moved_up[row-1][col] = 0
-        #up_node = Node(moved_up, 0, 0)
     else:
         return -1
     return moved_up
@@ -110,7 +104,6 @@ def right(puzzle):
 # movements function should keep track of each possible movement made, adding 1 to the depth for each iteration
 def movements(puzzle):
     movements = []
-    #depth = 0
 
     if(up(puzzle) != -1):
         movements.append(up(puzzle))
@@ -161,18 +154,7 @@ def get_goal_tile(tile):
             if goal[i][j] == tile:
                 return i, j
 
-# implement a priority queue for the moves
-
-# search algorithm
-# function general-search(problem, QUEUEING-FUNCTION)
-# nodes = MAKE-QUEUE(MAKE-NODE(problem.INITIAL-STATE))
-# loop do
-#    if EMPTY(nodes) then return "failure"
-#    node = REMOVE-FRONT(nodes)
-#    if problem.GOAL-TEST(node.STATE) succeeds then return node
-#    nodes = QUEUEING-FUNCTION(nodes, EXPAND(node, problem.OPERATORS))
-# end
-
+# gets the selection for the chosen algorithm
 def search_selection():
     print("Enter the number associated with an algorithm to select it:\n"
                 + "1. Uniform Cost Search\n"
@@ -181,6 +163,8 @@ def search_selection():
     selection = input("Enter number: ")
     return selection
 
+# utilizes a priority queue that determines priority based on cost
+# terminates if the depth exceeds 500, or if the queue is ever empty
 def general_search(puzzle):
     already_visited = []
 
@@ -195,10 +179,9 @@ def general_search(puzzle):
     depth = 0
 
     starting_node = Node(puzzle, depth, heuristic)
-    nodes = []  # heap
+    nodes = []  # priority queue
     nodes.append(starting_node)
     
-    #heapq.heappush(nodes, starting_node)
     nodes_expanded = 0
     max_queue_size = 0
 
@@ -210,7 +193,10 @@ def general_search(puzzle):
 
         heapq.heapify(nodes)
         node = heapq.heappop(nodes)
-        #print_puzzle(node.puzzle)
+
+        stdout = open("output.txt", "w")
+        print("The best state to expand with a g(n) = ", node.depth, " and h(n) = ", node.heuristic, " is ")
+        print_puzzle(node.puzzle)
 
         if node.puzzle == goal:
             print("Goal has been reached.")
@@ -245,14 +231,4 @@ def general_search(puzzle):
             
         max_queue_size = max(len(nodes), max_queue_size)
 
-        """for a in range(len(moves)):
-                if moves[a] in already_visited:
-                    #moves.remove(moves[a])
-                    print("a")
-                else:
-                    already_visited.append(moves[a])"""
-
-        # finish later
-
-#general_search(goal)
 get_puzzle()
