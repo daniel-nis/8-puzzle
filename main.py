@@ -4,7 +4,7 @@ import heapq
 
 # using the professor's method of getting the puzzle, as seen in the project slides
 def get_puzzle():
-    """print("Enter your puzzle, using a zero to represent the blank. " 
+    print("Enter your puzzle, using a zero to represent the blank. " 
             + "Please only enter valid 8-puzzles. Enter the puzzle demilimiting " 
             + "the numbers with a space. RET only when finished." + '\n')
 
@@ -23,14 +23,14 @@ def get_puzzle():
 
 
 
-    puzzle = [puzzle_row_one, puzzle_row_two, puzzle_row_three]"""
-    #puzzle = [[1, 2, 3], [5, 0, 6], [4, 7, 8]]        # depth 4          ##### comment out later #####
-    #puzzle = [[1, 3, 6], [5, 0, 2], [4, 7, 8]]          # depth 8
-    #puzzle = [[1, 3, 6], [5, 0, 7], [4, 8, 2]]          # depth 12
-    #puzzle = [[1, 6, 7], [5, 0, 3], [4, 8, 2]]          # depth 16
+    puzzle = [puzzle_row_one, puzzle_row_two, puzzle_row_three]
+    #puzzle = [[1, 2, 3], [4, 5, 6], [0, 7, 8]]         # depth 2
+    #puzzle = [[1, 2, 3], [5, 0, 6], [4, 7, 8]]         # depth 4          ##### comment out later #####
+    #puzzle = [[1, 3, 6], [5, 0, 2], [4, 7, 8]]         # depth 8
+    #puzzle = [[1, 3, 6], [5, 0, 7], [4, 8, 2]]         # depth 12
+    #puzzle = [[1, 6, 7], [5, 0, 3], [4, 8, 2]]         # depth 16
     #puzzle = [[7, 1, 2], [4, 8, 5], [6, 3, 0]]         # depth 20
-    puzzle = [[0, 7, 2], [4, 6, 1], [3, 5, 8]]          # depth 24
-    #print_puzzle(puzzle)
+    #puzzle = [[0, 7, 2], [4, 6, 1], [3, 5, 8]]         # depth 24
 
     general_search(puzzle)
 
@@ -64,7 +64,6 @@ def up(puzzle):
     else:
         return -1
     return moved_up
-    #return up_node
 
 def down(puzzle):
     # move 0 down a row, unless 0 is in bottommost row
